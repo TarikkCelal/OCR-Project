@@ -1,6 +1,7 @@
 import pytesseract
 import cv2
 
+# Preprocessing for the image
 image = cv2.imread("index_02.jpeg")
 base_image = image.copy()
 
@@ -19,6 +20,7 @@ cv2.imwrite("index_kernal.jpg", kernal)
 dilate = cv2.dilate(thresh, kernal, iterations=1)
 cv2.imwrite("index_dilate.jpg", dilate)
 
+# Changing contrast to recognize boxes
 cnts = cv2.findContours(dilate, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 cnts = cnts[0] if len(cnts) == 2 else cnts[1]
 cnts = sorted(cnts, key=lambda x: cv2.boundingRect(x)[0])
@@ -35,6 +37,8 @@ for c in cnts:
             results.append(item)
 cv2.imwrite("index_box.jpg", image)
 entities = []
+
+# Adding each item into the list one by one
 for item in results:
     item = item.strip().replace("\n", "")
     item = item.split(" ")[0]
