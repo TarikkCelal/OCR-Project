@@ -25,7 +25,7 @@ for c in cnts:
         roi = base_image[0:y+h, 0:x+im_w]
         cv2.rectangle(image, (x, y), (x+w, y+h), (36, 255, 12), 2)
 
-cv2.imwrite("output.jpg", roi)
+cv2.imwrite("output_without_footnotes.jpg", roi)
 
 ocr_result = pytesseract.image_to_string(roi)
 print(ocr_result)
